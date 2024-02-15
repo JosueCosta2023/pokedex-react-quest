@@ -1,0 +1,36 @@
+Olá, esta é uma lista de tarefas que foi utilizada no desenvolvimento deste sistema.
+
+1º PseudoEstruturação de pastas                             - OK
+
+2° Escolher ferramentas e bibliotecas que seram utilizadas.
+    * Npm - Create Vite@latest                              - OK
+    * React e JavaScript puro                               - OK
+    * React Forms - Para inputs de filtragem                - OK
+    * Styled-Components - Para estilização                  - OK
+    * Axios - Para requisições a api                        - OK
+    * React Hook's - Para uso de estados                    - OK nativo
+    * Router-DOM - Para desenvolvimento das rotas           - OK nativo
+    * Context-Api - Para adicionar contexto de themas       - OK nativo
+
+3° Monte a estrutura de pastas                              - OK
+
+4° Criar
+    * Homepage
+    * Cards Global
+    * Detalhes do card indivudual
+    * Estilização
+
+5º Criar navegação entre pagina Home e Profile
+
+6º Criar os themes 'day' e 'night'
+
+7º Criar conexão entre Api e a pagina
+
+8º Alimentar elementos HTML que retornos da API
+    * Crie funções e hook's se necessario
+
+9º Criar filtro de tipos de pokemons que serão exebidos
+
+10º Criar uma barra de pesquisa por pokemons
+
+
