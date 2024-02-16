@@ -1,17 +1,43 @@
 import styled from "styled-components"
-import fetchPokemons from "../../utils/functions/fetch"
-
-const data = await fetchPokemons()
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 const Cards = () => {
+
+    const [pokemons, setPokemons] = useState({})
+
+    const getPokemons = (id) => {
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+            .then(response => {
+                const pokemon = response.data
+                setPokemons((prevPokemon) => ({ ...prevPokemon, [id]: pokemon }))
+            })
+    }
+
+    const arrayPokemons = () => Array(12)
+        .fill()
+        .map((pokemon, index) => getPokemons(index + 1))
+
+    useEffect(() => {
+        arrayPokemons()
+    }, [])
+
+
+    console.log(pokemons)
+
     return (
-        <>  {data.results.map((pokemon) => (
-                <Card key={"key"}>
-                    <img src="/public/images/char.png" alt="pokemon1" />
-                    <h2>{pokemon.name}</h2>
-                </Card>
-        ))}
-        </> 
+        <>
+            {
+                Object.values(pokemons)
+                    .map(item =>
+                        <Card>
+                            <img src={item.sprites.front_default} alt={item.name} title={item.name}/>
+                            <h2>{item.name}</h2>
+                        </Card>
+                    )
+            }
+
+        </>
     )
 }
 
@@ -21,8 +47,7 @@ const Card = styled.section`
     background-color:#fff;
     border:5px solid #101217;
     text-align:center;
-    width:150px;
-    height:200px;
+    width:250px;
     cursor:pointer;
     display:flex;
     flex-direction:column;
@@ -34,7 +59,7 @@ const Card = styled.section`
     }
 
     img{
-        width:50%;
+        width:80%;
         margin:0 auto;
     }
 `
