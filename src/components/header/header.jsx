@@ -4,9 +4,8 @@ const Header = () => {
     return (
         <>
             <HeaderStyle>
-                <h1>
-                    "Seu logo Aqui"
-                </h1>
+                <img src="/public/images/logo.png" alt="Logo principal de pokemons" />
+                <button>☀️Dia</button>
             </HeaderStyle>
         </>
     )
@@ -15,12 +14,23 @@ const Header = () => {
 
 const HeaderStyle = styled.header`
     width:100%;
-    height:200px;
-    background-color:black;
+    background-color:#101217;
     color:white;
     display:flex;
-    justify-content:center;
+    justify-content:space-around;
     align-items:center;
+    img{
+        width:100px;
+    }
+
+    button{
+        font-size:14px;
+        padding: 0 20px;
+        cursor:pointer;
+        text-transform:uppercase;
+        font-weight:bold;
+        color:#101217;
+    }
 `
 
 export default Header
