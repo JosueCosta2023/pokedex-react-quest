@@ -20,7 +20,7 @@ const HeaderStyle = styled.header`
     justify-content:space-around;
     align-items:center;
     img{
-        width:100px;
+        width:200px;
     }
 
     button{
