@@ -9,7 +9,7 @@ export const ThemeToggleButton = () => {
         <>
             <Button onClick={() => setTheme(
                 theme === themes.dark ? themes.light : themes.dark
-            )}>Clique aqui</Button>
+            )}>Alternar Thema</Button>
         </>
     )
 }
