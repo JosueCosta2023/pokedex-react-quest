@@ -1,11 +1,12 @@
+
 import GlobalStyled from "./GlobalStyled"
-import Home from "./pages/home/home"
+import AppRoutes from "./pages/routes"
 
 function App() {
   return (
     <>
         <GlobalStyled/>
-        <Home/>
+        <AppRoutes/>
     </>
   )
 }

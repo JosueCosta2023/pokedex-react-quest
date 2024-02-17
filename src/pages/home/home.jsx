@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom"
+import Cards from "../../components/cards/cards"
 import Header from "../../components/header/header"
-import Section from "../../components/section/section"
 
 const Home = () => {
     return (
         <>
-           <Header/>
-           <Section/>
+            <Header />
+            
+            <Cards/>
         </>
     )
 }

@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const Header = () => {
     return (
         <>
             <HeaderStyle>
-                <img src="/public/images/logo.png" alt="Logo principal de pokemons" />
+                <Link to="/">
+                    <img src="/public/images/logo.png" alt="Logo principal de pokemons" />
+                </Link>
                 <button>☀️Dia</button>
             </HeaderStyle>
         </>
