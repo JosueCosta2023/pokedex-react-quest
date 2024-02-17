@@ -1,39 +1,28 @@
 import { Link } from "react-router-dom"
-import styled from "styled-components"
+import { ThemeToggleButton } from "../theme-toggle-button/theme-toggler-button"
+import { useContext } from "react"
+import { ThemeContext } from "../../contexts/theme-context"
 
 const Header = () => {
+    const theme = useContext(ThemeContext)
+    console.log(theme)
     return (
         <>
-            <HeaderStyle>
+            <header style={{
+                width:"100%",
+                display:"flex",
+                backgroundColor:theme.theme.background,
+                justifyContent:"space-around",
+                alignItems:"center"
+            }}>
                 <Link to="/">
-                    <img src="/public/images/logo.png" alt="Logo principal de pokemons" />
+                    <img src="/public/images/logo.png" alt="Logo principal de pokemons" style={{width:"200px"}} />
                 </Link>
-                <button>☀️Dia</button>
-            </HeaderStyle>
+                <ThemeToggleButton/>
+            </header>
         </>
     )
 }
 
-
-const HeaderStyle = styled.header`
-    width:100%;
-    background-color:#101217;
-    color:white;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    img{
-        width:200px;
-    }
-
-    button{
-        font-size:14px;
-        padding: 0 20px;
-        cursor:pointer;
-        text-transform:uppercase;
-        font-weight:bold;
-        color:#101217;
-    }
-`
 
 export default Header

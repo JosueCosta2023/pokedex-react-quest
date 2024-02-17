@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import Cards from "../../components/cards/cards"
 import Header from "../../components/header/header"
 
@@ -6,7 +5,6 @@ const Home = () => {
     return (
         <>
             <Header />
-            
             <Cards/>
         </>
     )

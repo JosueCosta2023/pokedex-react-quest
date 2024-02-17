@@ -1,27 +1,31 @@
 import styled from "styled-components"
 import Card from "../card/card"
+import { useContext } from "react"
+import { ThemeContext } from "../../contexts/theme-context"
 
 const Cards = () => {
+
+    const theme = useContext(ThemeContext)
+
     return(
         <>
-            <CardContentStyle>
+            <section style={{
+                 width:"1400px",
+                 maxWidth:"100%",
+                 margin:"0 auto",
+                 display:"flex",
+                 alignItems:"center",
+                 justifyContent:"center",
+                 flexWrap:"wrap",
+                 gap:"10px",
+                 paddingTop:"10px",
+                backgroundColor: theme.theme.backgroundCard
+            }}>
                 <Card/>
-            </CardContentStyle>
+            </section>
         </>
     )
 }
 
-const CardContentStyle = styled.section`
-    width:1400px;
-    max-width:100%;
-    margin:0 auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-    padding-top:10px;
-    background-color:red;
-`
 
 export default Cards
