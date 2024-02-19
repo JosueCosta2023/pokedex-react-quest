@@ -8,7 +8,6 @@ const Cards = () => {
     
     const SECTION_STYLED = {
         width: "100%",
-        height:"100%",
         padding:"50px 0px",
         display:"flex",
         justifyContent:"center",

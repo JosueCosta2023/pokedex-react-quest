@@ -1,7 +1,6 @@
 
 import { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import styled from "styled-components"
 import { ThemeContext } from "../../contexts/theme-context"
 import axios from "axios"
 
@@ -78,7 +77,7 @@ const Card = () => {
         <ul style={CARD_CONTENT}>
             {
                 pokemons.map((pokemon, index) => (
-                    <Link to='/profile' key={index}>
+                    <Link to='/profile' key={index} >
                         <li style={CARD_STYLE}>
                             <img src={pokemon.image} alt="Ilustração: imagem" style={IMAGE_STYLE} />
                             <h3 style={NAME_STYLE}>{pokemon.name}</h3>
