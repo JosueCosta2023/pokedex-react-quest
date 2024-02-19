@@ -9,7 +9,9 @@ const Card = () => {
 
     const CARD_CONTENT = {
         width: "1400px",
+        padding:'0',
         maxWidth: "100%",
+        height:"100%",
         margin: " 0 auto",
         gap: "20px",
         display: "flex",
@@ -19,14 +21,15 @@ const Card = () => {
 
     const CARD_STYLE = {
         backgroundColor: theme.theme.bodyCardBackgroundColor,
-        border: "5px solid #101217",
+        border: "2px solid #fff",
         textAlign: "center",
         padding: "20px 30px",
         width: "250px",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center"
+        justifyContent: "center",
+        borderRadius:"15px"
     }
     const IMAGE_STYLE = {
         width:"100%",
@@ -38,12 +41,37 @@ const Card = () => {
         lineHeight:"60px",
         color:"black",
         fontSize:"20px",
+        borderRadius:"5px",
         backgroundColor: theme.theme.bodyCardButtomBackgroundColor,
         color: theme.theme.bodyCardButtonFontcolor
     }
 
     return (
         <ul style={CARD_CONTENT}>
+            <Link to='/profile'>
+                <li style={CARD_STYLE}>
+                    <img src="/public/images/char.png" alt="Ilustração: imagem" style={IMAGE_STYLE} />
+                    <h3 style={NAME_STYLE}>Nome Pokemon</h3>
+                </li>
+            </Link>
+            <Link to='/profile'>
+                <li style={CARD_STYLE}>
+                    <img src="/public/images/char.png" alt="Ilustração: imagem" style={IMAGE_STYLE} />
+                    <h3 style={NAME_STYLE}>Nome Pokemon</h3>
+                </li>
+            </Link>
+            <Link to='/profile'>
+                <li style={CARD_STYLE}>
+                    <img src="/public/images/char.png" alt="Ilustração: imagem" style={IMAGE_STYLE} />
+                    <h3 style={NAME_STYLE}>Nome Pokemon</h3>
+                </li>
+            </Link>
+            <Link to='/profile'>
+                <li style={CARD_STYLE}>
+                    <img src="/public/images/char.png" alt="Ilustração: imagem" style={IMAGE_STYLE} />
+                    <h3 style={NAME_STYLE}>Nome Pokemon</h3>
+                </li>
+            </Link>
             <Link to='/profile'>
                 <li style={CARD_STYLE}>
                     <img src="/public/images/char.png" alt="Ilustração: imagem" style={IMAGE_STYLE} />
