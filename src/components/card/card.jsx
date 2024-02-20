@@ -84,7 +84,6 @@ const Card = () => {
                         </li>
                     </Link>
                 ))
-
             }
         </ul>
     )
