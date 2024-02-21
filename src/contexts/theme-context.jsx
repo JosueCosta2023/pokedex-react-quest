@@ -10,7 +10,9 @@ export const themes = {
         bodyContainerBackgroundColor:'var(--primary-dark-color)',
         bodyCardButtomBackgroundColor:'var(--primary-dark-color)',
         bodyCardBackgroundColor:'var(--primary-light-color)',
-        bodyCardButtonFontcolor:'var(--primary-dark-color)'	
+        bodyCardButtonFontcolor:'var(--primary-dark-color)',
+        bodyCardDetails:'var(--primary-light-color)',
+        bodyCardDetailsFontTitles:'var(--primary-dark-color)'
     },
     dark:{
         headerBackgroundColor:'var(--primary-dark-color)',
@@ -20,7 +22,9 @@ export const themes = {
         bodyContainerBackgroundColor:'var(--primary-light-color)',
         bodyCardButtomBackgroundColor:'var(--primary-light-color)',
         bodyCardBackgroundColor:'var(--primary-dark-color)',
-        bodyCardButtonFontcolor:'var(--primary-light-color)'	
+        bodyCardButtonFontcolor:'var(--primary-light-color)',
+        bodyCardDetails:'var(--primary-dark-color)',
+        bodyCardDetailsFontTitles:'var(--primary-light-color)'
     }
 }
 
