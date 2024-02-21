@@ -10,7 +10,7 @@ export const themes = {
         bodyContainerBackgroundColor:'var(--primary-dark-color)',
         bodyCardButtomBackgroundColor:'var(--primary-dark-color)',
         bodyCardBackgroundColor:'var(--primary-light-color)',
-        bodyCardButtonFontcolor:'var(--primary-light-color)'	
+        bodyCardButtonFontcolor:'var(--primary-dark-color)'	
     },
     dark:{
         headerBackgroundColor:'var(--primary-dark-color)',
@@ -20,16 +20,15 @@ export const themes = {
         bodyContainerBackgroundColor:'var(--primary-light-color)',
         bodyCardButtomBackgroundColor:'var(--primary-light-color)',
         bodyCardBackgroundColor:'var(--primary-dark-color)',
-        bodyCardButtonFontcolor:'var(--primary-dark-color)'	
+        bodyCardButtonFontcolor:'var(--primary-light-color)'	
     }
 }
 
 export const ThemeContext = createContext({});
 
-export const ThemeProvider = (props) => {
+export const ThemeProviderComponent = (props) => {
 
     const [theme, setTheme] = useState(themes.light)
-
 
     return(
         <ThemeContext.Provider value={{theme, setTheme}}>
@@ -37,3 +36,4 @@ export const ThemeProvider = (props) => {
         </ThemeContext.Provider>
     )
 }
+

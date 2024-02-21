@@ -1,27 +1,28 @@
-import { useState } from "react"
 
-export const ButtomCharge = () => {
+import styled from "styled-components"
 
-    const [ hover, setHover ] = useState(false)
-
-    const BUTTOM_CARGE_STYLE = {
-        width: "310px",
-        height: "60px",
-        backgroundColor: hover ? 'red' : 'white',
-        color: hover ? 'white' : 'red',
-        border:hover ? '2px solid red' : '2px solid red',
-        fontSize: "30px",
-        lineHeight: '60px',
-        textAlign: "center",
-        padding: "10px 0px",
-        margin: "0 auto",
-        cursor: "pointer",
-        borderRadius: "10px",
-    }
-    return <buttom
-        style={BUTTOM_CARGE_STYLE}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}>
-        Carregar Mais</buttom>
+const ButtomCharge = () => {
+  
+    return <ButtonChargeStyled>Carregar Mais</ButtonChargeStyled>
 }
 
+const ButtonChargeStyled = styled.button`
+    width: 310px;
+    height: 60px;
+    background-color: red;
+    color: white;
+    border:2px solid red;
+    font-size: 30px;
+    text-align: center;
+    padding: 10px 0px;
+    margin: 0 auto;
+    cursor: pointer;
+    border-radius: 10px;
+    &:hover{
+        background-color:white;
+        color:red;
+        border:2px solid red;
+    }
+`
+
+export default ButtomCharge

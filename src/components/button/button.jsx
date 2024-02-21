@@ -1,18 +1,22 @@
 import { useContext } from "react"
-import { ThemeContext } from "../../contexts/theme-context"
+import  {ThemeContext}  from "../../contexts/theme-context"
+import styled from "styled-components"
 
-export const Button = (props) => {
+const Button = (props) => {
     const theme = useContext(ThemeContext)
 
-    const BUTTON_STYLE = {
-        color: theme.theme.headerButtonFontColor,
-        backgroundColor: theme.theme.headerButtomBackgroundColor,
-        padding:"5px 20px",
-        fontSize:"20px",
-        borderRadius:"5px"
-        
-    }
     return(
-        <button {...props} style={ BUTTON_STYLE} />
+        <ButtomStyled {...props} theme={theme.theme} />
     )
 }
+
+
+const ButtomStyled = styled.button`
+    color: ${(theme) => theme.theme.headerButtonFontColor};
+    background-color: ${(theme) => theme.theme.headerButtomBackgroundColor};
+    padding:5px 20px;
+    font-size:20px;
+    border-radius:5px;
+`
+
+export default Button

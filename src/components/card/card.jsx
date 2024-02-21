@@ -1,8 +1,9 @@
 
 import { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { ThemeContext } from "../../contexts/theme-context"
+import  {ThemeContext}  from "../../contexts/theme-context"
 import axios from "axios"
+import styled from "styled-components"
 
 
 const Card = () => {
@@ -13,9 +14,9 @@ const Card = () => {
                 const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=10&offset=0')
                 const results = response.data.results;
 
-                const pokemonPromises = results.map( async (result)=>{
+                const pokemonPromises = results.map(async (result) => {
                     const pokemonResponse = await axios.get(result.url);
-                    return{
+                    return {
                         name: pokemonResponse.data.name,
                         image: pokemonResponse.data.sprites.front_default
                     };
@@ -23,73 +24,72 @@ const Card = () => {
 
                 const pokemonData = await Promise.all(pokemonPromises)
                 setPokemon(pokemonData)
-                
+
             } catch (error) {
                 console.error("Falha ao buscar pokemons: ", error)
             }
         }
-
+        
         PokemonData()
-
+        
     }, [])
-
+    
     const theme = useContext(ThemeContext)
-
-    const CARD_CONTENT = {
-        width: "1400px",
-        padding:'0',
-        maxWidth: "100%",
-        height:"100%",
-        margin: " 0 auto",
-        gap: "20px",
-        display: "flex",
-        flexWrap:"wrap",
-        justifyContent: "center"
-    }
-    const CARD_STYLE = {
-        backgroundColor: theme.theme.bodyCardBackgroundColor,
-        border: "2px solid #fff",
-        textAlign: "center",
-        padding: "20px 30px",
-        width: "250px",
-        cursor: "pointer",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        borderRadius:"15px"
-    }
-    const IMAGE_STYLE = {
-        width:"100%",
-        height:"350px"
-    }
-    const NAME_STYLE = {
-        width:"100%",
-        height:"60px",
-        lineHeight:"60px",
-        color:"black",
-        fontSize:"30px",
-        borderRadius:"5px",
-        backgroundColor: theme.theme.bodyCardButtomBackgroundColor,
-        color: theme.theme.bodyCardButtonFontcolor
-    }
-
+    
     return (
-        <ul style={CARD_CONTENT}>
+        <CardContent>
             {
                 pokemons.map((pokemon, index) => (
                     <Link to='/profile' key={index} >
-                        <li style={CARD_STYLE}>
-                            <img src={pokemon.image} alt="Ilustração: imagem" style={IMAGE_STYLE} />
-                            <h3 style={NAME_STYLE}>{pokemon.name}</h3>
-                        </li>
+                        <CardStyled theme={theme.theme}>
+                            <ImageStyle theme={theme.theme} src={pokemon.image} alt="Ilustração: imagem"  />
+                            <Name theme={theme.theme}>{pokemon.name}</Name>
+                        </CardStyled>
                     </Link>
                 ))
-
             }
-        </ul>
+        </CardContent>
     )
 }
 
+
+    const CardContent = styled.ul`
+    width: 1400px;
+    padding:0;
+    max-width: 100%;
+    height:100%;
+    margin: 0 auto;
+    gap:20px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    `
+    const ImageStyle = styled.img`
+    width: 100%;
+    height: 350px;
+    `
+    const CardStyled = styled.li`
+    background-color:${(theme) => theme.theme.bodyCardBackgroundColor};
+    border: 2px solid #fff;
+    text-align: center;
+    padding: 20px 30px;
+    width: 250px;
+    cursor: pointer;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    `
+    const Name = styled.h3`
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-transform:capitalize;
+    font-size: 30px;
+    border-radius: 5px;
+    background-color: ${(theme) => theme.bodyCardButtomBackgroundColor};
+    color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
+`
 
 
 export default Card
