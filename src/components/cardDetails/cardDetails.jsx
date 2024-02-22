@@ -1,30 +1,45 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
+import { useParams } from "react-router-dom"
 import { ThemeContext } from "../../contexts/theme-context"
+import axios from "axios"
+
+async function getPokemonsDetails(id){
+    try {
+        const response = await axios(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+        return response
+    } catch (error) {
+        console.error("retorno da api: ", error)
+    }
+}
 
 const CardDetails = () => {
-
+    const {id} = useParams()
+    const [ detail, setDetails] = useState({})
     const theme = useContext(ThemeContext)
+
+    useEffect(() => {
+        async function detailsPokemon(){
+            const detail = await getPokemonsDetails(id)
+            console.log(detail.data)
+            setDetails(detail.data)
+        }
+        detailsPokemon()
+    }, [])
 
     return (
         <SectionStyled theme={theme.theme}>
             <CardDetailsStyle theme={theme.theme}>
                 <CardImageSide>
-                    <div />
-                    <p>Jacerex</p>
-                    <span>Agua</span>
+                    <p>{detail.name}</p>
+                    <span>teste</span>
                 </CardImageSide>
 
                 <CardDetailsSide >
                        <DetailsMoves>
                             <h2>Movimentos</h2>
                             <MovesList>
-                                <li>Movimento 1</li>
-                                <li>Movimento 2</li>
-                                <li>Movimento 3</li>
-                                <li>Movimento 3</li>
-                                <li>Movimento 3</li>
-                                <li>Movimento 3</li>
+                               <li>Teste</li>
                             </MovesList>
                        </DetailsMoves>
                        <DetailsAbility>
@@ -71,24 +86,26 @@ const CardDetailsStyle = styled.div`
     box-shadow: 7px 3px 14px 0px rgba(0,0,0,0.46);
     display:flex;
     justify-content:space-between;
+    color:${(theme) => theme.theme.bodyCardDetailsFontTitles};
 `
 
 const CardImageSide = styled.div`
-    width:40%;
-    text-align:center;
-    font-size:25px;
-    font-weight:bold;
-    div{
-        width:100%;
-        height:60%;
-        background-image:url('/public/images/char.png');
-        background-size:50%;
-        background-repeat:no-repeat;
+    width:350px;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    img{
+        width:250px;
+        height:250px;
+        border:5px solid white;
         background-position:bottom;
         transform:rotateY(180deg);
     }
     p{
         font-size:40px;
+        text-transform:uppercase;
     }
 `
 const CardDetailsSide = styled.div`
@@ -139,9 +156,6 @@ const AbilityList = styled.ul`
         width:90%;
     }
 
-    li:nhtchild(3){
-        padding-bottom:0px;
-    }
     li p{
         font-size:20px;
         margin-bottom:5px;
@@ -163,4 +177,3 @@ const AbilityList = styled.ul`
 
 `
 export default CardDetails
-
