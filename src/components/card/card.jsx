@@ -1,9 +1,9 @@
 
 import { useContext, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
 import  {ThemeContext}  from "../../contexts/theme-context"
 import axios from "axios"
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 
 const Card = () => {
@@ -17,6 +17,7 @@ const Card = () => {
                 const pokemonPromises = results.map(async (result) => {
                     const pokemonResponse = await axios.get(result.url);
                     return {
+                        id:pokemonResponse.data.id,
                         name: pokemonResponse.data.name,
                         image: pokemonResponse.data.sprites.front_default
                     };
@@ -40,10 +41,16 @@ const Card = () => {
         <CardContent>
             {
                 pokemons.map((pokemon, index) => (
-                    <Link to='/profile' key={index} >
-                        <CardStyled theme={theme.theme}>
+                    <Link to={`/profile/${pokemon.id}`} key={index} >
+                        <CardStyled theme={theme.theme}   >
+                            <span></span>
                             <ImageStyle theme={theme.theme} src={pokemon.image} alt="Ilustração: imagem"  />
-                            <Name theme={theme.theme}>{pokemon.name}</Name>
+                            <Number theme={theme.theme}>
+                                N° {pokemon.id} 
+                            </Number>
+                            <Name theme={theme.theme}>
+                               {pokemon.name} 
+                            </Name>
                         </CardStyled>
                     </Link>
                 ))
@@ -89,6 +96,12 @@ const Card = () => {
     border-radius: 5px;
     background-color: ${(theme) => theme.bodyCardButtomBackgroundColor};
     color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
+`
+
+const Number = styled.span`
+    font-size:18px;
+    color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
+    margin-bottom:-20px;
 `
 
 
