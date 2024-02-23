@@ -11,7 +11,7 @@ const Card = () => {
     useEffect(() => {
         const PokemonData = async () => {
             try {
-                const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=10&offset=0')
+                const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=40&offset=0')
                 const results = response.data.results;
 
                 const pokemonPromises = results.map(async (result) => {
@@ -44,7 +44,7 @@ const Card = () => {
                     <Link to={`/profile/${pokemon.id}`} key={index} >
                         <CardStyled theme={theme.theme}   >
                             <span></span>
-                            <ImageStyle theme={theme.theme} src={pokemon.image} alt="Ilustração: imagem"  />
+                            <ImageStyle theme={theme.theme} src={pokemon.image} alt="Ilustração: imagem" title={pokemon.name}  />
                             <Number theme={theme.theme}>
                                 N° {pokemon.id} 
                             </Number>

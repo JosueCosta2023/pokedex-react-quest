@@ -21,7 +21,6 @@ const CardDetails = () => {
     useEffect(() => {
         async function detailsPokemon(){
             const detail = await getPokemonsDetails(id)
-            console.log(detail.data)
             setDetails(detail.data)
         }
         detailsPokemon()
@@ -31,15 +30,22 @@ const CardDetails = () => {
         <SectionStyled theme={theme.theme}>
             <CardDetailsStyle theme={theme.theme}>
                 <CardImageSide>
+                    <img src={detail.sprites?.front_default} alt={detail.name} title={detail.name}  />
                     <p>{detail.name}</p>
-                    <span>teste</span>
+                    <span>tipo</span>
+                  
                 </CardImageSide>
 
                 <CardDetailsSide >
                        <DetailsMoves>
                             <h2>Movimentos</h2>
                             <MovesList>
-                               <li>Teste</li>
+                               <li>movimento 1</li>
+                               <li>movimento 1</li>
+                               <li>movimento 1</li>
+                               <li>movimento 1</li>
+                               <li>movimento 1</li>
+                               <li>movimento 1</li>
                             </MovesList>
                        </DetailsMoves>
                        <DetailsAbility>
@@ -99,7 +105,7 @@ const CardImageSide = styled.div`
     img{
         width:250px;
         height:250px;
-        border:5px solid white;
+        
         background-position:bottom;
         transform:rotateY(180deg);
     }
