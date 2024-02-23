@@ -21,6 +21,7 @@ const CardDetails = () => {
     useEffect(() => {
         async function detailsPokemon(){
             const detail = await getPokemonsDetails(id)
+           console.log(detail.data.abilities)
             setDetails(detail.data)
         }
         detailsPokemon()
@@ -32,38 +33,38 @@ const CardDetails = () => {
                 <CardImageSide>
                     <img src={detail.sprites?.front_default} alt={detail.name} title={detail.name}  />
                     <p>{detail.name}</p>
-                    <span>tipo</span>
-                  
+                            {
+                            detail.types && detail.types.map((types, index) => {
+                                return(
+                                    <span key={index}>{types.type.name}</span>
+                                )
+                            })
+                            }
                 </CardImageSide>
 
                 <CardDetailsSide >
                        <DetailsMoves>
                             <h2>Movimentos</h2>
                             <MovesList>
-                               <li>movimento 1</li>
-                               <li>movimento 1</li>
-                               <li>movimento 1</li>
-                               <li>movimento 1</li>
-                               <li>movimento 1</li>
-                               <li>movimento 1</li>
+                               {
+                                detail.moves && detail.moves.slice(0, 6).map((movimentos, index) => (
+                                    <li key={index}>{movimentos.move.name}</li>
+                                ))
+                               }
                             </MovesList>
                        </DetailsMoves>
                        <DetailsAbility>
                             <h2>Habilidades</h2>
                             <AbilityList>
-                                <li>
-                                    <p>Habilidade 1</p>
+                                {
+                                    detail.abilities && detail.abilities.map((ability, index) => (
+                                <li key={index}>
+                                    <p>{ability.ability.name}</p>
                                     <span>Descrição completa da habilidade</span>
                                 </li>
 
-                                <li>
-                                    <p>Habilidade 2</p>
-                                    <span>Descrição completa da habilidade</span>
-                                </li>
-                                <li>
-                                    <p>Habilidade 3</p>
-                                    <span>Descrição completa da habilidade</span>
-                                </li>
+                                    ))
+                                }
                             </AbilityList>
                        </DetailsAbility>
                 </CardDetailsSide>
@@ -112,6 +113,12 @@ const CardImageSide = styled.div`
     p{
         font-size:40px;
         text-transform:uppercase;
+    }
+    span{
+        padding:5px 10px;
+        background-color:white;
+        border-radius:10px;
+        margin-bottom:2px;
     }
 `
 const CardDetailsSide = styled.div`
