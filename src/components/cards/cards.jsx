@@ -1,7 +1,6 @@
 import Card from "../card/card"
 import { useContext } from "react"
 import  {ThemeContext}  from "../../contexts/theme-context"
-import  ButtomCharge  from "../button/buttonCharge"
 import styled from "styled-components"
 
 const Cards = () => {
@@ -12,7 +11,7 @@ const Cards = () => {
         <>
             <SectionStyled theme={theme.theme}>
                 <Card />
-                <ButtomCharge/>
+
             </SectionStyled>
         </>
     )
