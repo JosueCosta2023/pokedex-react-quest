@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom"
 import { ThemeContext } from "../../contexts/theme-context"
 import axios from "axios"
 
-async function getPokemonsDetails(id){
+async function getPokemonsDetails(id) {
     try {
         const response = await axios(`https://pokeapi.co/api/v2/pokemon/${id}/`)
         return response
@@ -13,15 +13,15 @@ async function getPokemonsDetails(id){
     }
 }
 
-const CardDetails = () => {
-    const {id} = useParams()
-    const [ detail, setDetails] = useState({})
-    const theme = useContext(ThemeContext)
 
+const CardDetails = () => {
+    const { id } = useParams()
+    const [detail, setDetails] = useState({})
+    const theme = useContext(ThemeContext)
+    
     useEffect(() => {
-        async function detailsPokemon(){
+        async function detailsPokemon() {
             const detail = await getPokemonsDetails(id)
-           console.log(detail.data.abilities)
             setDetails(detail.data)
         }
         detailsPokemon()
@@ -31,42 +31,43 @@ const CardDetails = () => {
         <SectionStyled theme={theme.theme}>
             <CardDetailsStyle theme={theme.theme}>
                 <CardImageSide>
-                    <img src={detail.sprites?.front_default} alt={detail.name} title={detail.name}  />
+                    <h5>Xp: {detail.base_experience}</h5>
+                    <img src={detail.sprites?.front_default} alt={detail.name} title={detail.name} />
                     <p>{detail.name}</p>
-                            {
+                    <div>
+                        {
                             detail.types && detail.types.map((types, index) => {
-                                return(
+                                return (
                                     <span key={index}>{types.type.name}</span>
                                 )
                             })
-                            }
+                        }
+                    </div>
                 </CardImageSide>
 
                 <CardDetailsSide >
-                       <DetailsMoves>
-                            <h2>Movimentos</h2>
-                            <MovesList>
-                               {
-                                detail.moves && detail.moves.slice(0, 6).map((movimentos, index) => (
+                    <DetailsMoves>
+                        <h2>Movimentos</h2>
+                        <MovesList>
+                            {
+                                detail.moves && detail.moves.slice(0, 12).map((movimentos, index) => (
                                     <li key={index}>{movimentos.move.name}</li>
                                 ))
-                               }
-                            </MovesList>
-                       </DetailsMoves>
-                       <DetailsAbility>
-                            <h2>Habilidades</h2>
-                            <AbilityList>
-                                {
-                                    detail.abilities && detail.abilities.map((ability, index) => (
-                                <li key={index}>
-                                    <p>{ability.ability.name}</p>
-                                    <span>Descrição completa da habilidade</span>
-                                </li>
-
-                                    ))
-                                }
-                            </AbilityList>
-                       </DetailsAbility>
+                            }
+                        </MovesList>
+                    </DetailsMoves>
+                    <DetailsAbility>
+                        <h2>Habilidades</h2>
+                        <AbilityList>
+                            {
+                                detail.abilities && detail.abilities.map((ability, index) => (
+                                    <li key={index}>
+                                        <p>{ability.ability.name}</p>
+                                    </li>
+                                ))
+                            }
+                        </AbilityList>
+                    </DetailsAbility>
                 </CardDetailsSide>
             </CardDetailsStyle>
         </SectionStyled>
@@ -115,10 +116,16 @@ const CardImageSide = styled.div`
         text-transform:uppercase;
     }
     span{
-        padding:5px 10px;
+        width:100px;
+        height:25px;
+        line-height:25px;
+        text-align:center;
+        display:inline-block;
         background-color:white;
         border-radius:10px;
-        margin-bottom:2px;
+        margin-left:5px;
+        color:black;
+        text-transform:capitalize;
     }
 `
 const CardDetailsSide = styled.div`
@@ -139,12 +146,17 @@ const DetailsMoves = styled.div`
 const MovesList = styled.ul`
     display:flex;
     padding:0;
-    justify-content:space-between;
+    justify-content:center;
     gap:10px;
     flex-wrap:wrap;
     li{
-        padding:10px 20px;
-        background-color:gray;
+        width:135px;
+        font-size:18px;
+        height:30px;
+        line-height:30px;
+        text-transform:capitalize;
+        background-color:white;
+        color:black;
         border-radius:5px;
     }
 `
@@ -176,7 +188,8 @@ const AbilityList = styled.ul`
         padding:10px;
         border-bottom:1px solid black;
         text-align:left;
-        background-color:#808080;
+        background-color:white;
+        color:black;
         border-radius:10px 10px 0px 0px ;
     }
 
