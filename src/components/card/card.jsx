@@ -4,6 +4,7 @@ import  {ThemeContext}  from "../../contexts/theme-context"
 import axios from "axios"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
+import { getPokemon } from "../getsApi"
 
 
 const Card = () => {
@@ -11,9 +12,7 @@ const Card = () => {
     useEffect(() => {
         const PokemonData = async () => {
             try {
-                const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=40&offset=0')
-                const results = response.data.results;
-
+                const results = await getPokemon()
                 const pokemonPromises = results.map(async (result) => {
                     const pokemonResponse = await axios.get(result.url);
                     return {
@@ -22,7 +21,6 @@ const Card = () => {
                         image: pokemonResponse.data.sprites.front_default
                     };
                 })
-
                 const pokemonData = await Promise.all(pokemonPromises)
                 setPokemon(pokemonData)
 

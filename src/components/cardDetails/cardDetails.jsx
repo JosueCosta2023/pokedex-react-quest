@@ -2,27 +2,18 @@ import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useParams } from "react-router-dom"
 import { ThemeContext } from "../../contexts/theme-context"
-import axios from "axios"
-
-async function getPokemonsDetails(id) {
-    try {
-        const response = await axios(`https://pokeapi.co/api/v2/pokemon/${id}/`)
-        return response
-    } catch (error) {
-        console.error("retorno da api: ", error)
-    }
-}
+import { getPokemonsDetails } from "../getsApi"
 
 
 const CardDetails = () => {
     const { id } = useParams()
     const [detail, setDetails] = useState({})
     const theme = useContext(ThemeContext)
-    
+
     useEffect(() => {
         async function detailsPokemon() {
-            const detail = await getPokemonsDetails(id)
-            setDetails(detail.data)
+            const response = await getPokemonsDetails(id)
+            setDetails(response.data)
         }
         detailsPokemon()
     }, [])
@@ -65,6 +56,7 @@ const CardDetails = () => {
                                         <p>{ability.ability.name}</p>
                                     </li>
                                 ))
+
                             }
                         </AbilityList>
                     </DetailsAbility>
@@ -107,7 +99,7 @@ const CardImageSide = styled.div`
     img{
         width:250px;
         height:250px;
-        
+        transform:scale(1.5);
         background-position:bottom;
         transform:rotateY(180deg);
     }

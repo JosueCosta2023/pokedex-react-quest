@@ -5,13 +5,10 @@ import styled from "styled-components"
 
 const Cards = () => {
     const theme = useContext(ThemeContext)
-
-
     return (
         <>
             <SectionStyled theme={theme.theme}>
                 <Card />
-
             </SectionStyled>
         </>
     )

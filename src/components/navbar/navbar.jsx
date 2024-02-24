@@ -1,8 +1,11 @@
 import styled from "styled-components"
 import React, { useEffect, useState } from "react"
+import {  getPokemonsTypesFilter } from "../getsApi"
+
+const responsePokemonsTypes = await getPokemonsTypesFilter()
+
 
 const Navbar = () => {
-
     const [isSticky, setIsSticky] = useState(false)
 
     useEffect(() => {
@@ -20,13 +23,16 @@ const Navbar = () => {
         }
     }, [])
 
-
-
     return(
         <NavContainer style={{top: isSticky ? '0px' : '-100px'}} >
             <Nav>
-                <Selection name="" id="">
-                    <option value="all-types">All Types</option>
+                <Selection>
+                    <option value="">All Types</option>
+                    {
+                        responsePokemonsTypes.map((type, index) => (
+                            <option value={type.name} key={index}>{type.name}</option>
+                        ))
+                    }
                 </Selection>
                 <ButtomSearch>Buscar</ButtomSearch>
             </Nav>
@@ -39,7 +45,7 @@ const NavContainer = styled.nav`
     height:100px;
     position:fixed;
     transition:top 0.3s;
-    background-color:black;
+    background-color:#260E0A;
 `
 
 const Nav = styled.div`
