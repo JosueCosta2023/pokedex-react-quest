@@ -18,7 +18,7 @@ const Card = () => {
                     return {
                         id:pokemonResponse.data.id,
                         name: pokemonResponse.data.name,
-                        image: pokemonResponse.data.sprites.front_default
+                        image: pokemonResponse.data.sprites.other['official-artwork'].front_default
                     };
                 })
                 const pokemonData = await Promise.all(pokemonPromises)
@@ -58,7 +58,7 @@ const Card = () => {
 
 
     const CardContent = styled.ul`
-    width: 1400px;
+    width: 1900px;
     padding:0;
     max-width: 100%;
     height:100%;
@@ -67,6 +67,7 @@ const Card = () => {
     display:flex;
     flex-wrap:wrap;
     justify-content: center;
+    margin-top:50px;
     `
     const ImageStyle = styled.img`
     width: 100%;

@@ -11,7 +11,7 @@ const Navbar = () => {
 
     useEffect(() => {
         const handScroll = () => {
-            if(window.scrollY > 100){
+            if(window.scrollY > 0){
                 setIsSticky(true)
             } else {
                 setIsSticky(false)
@@ -27,7 +27,7 @@ const Navbar = () => {
     }, [])
     
     return(
-        <NavContainer style={{top: isSticky ? '0px' : '-100px'}} >
+        <NavContainer style={{top: isSticky ? '0px' : '120px'}} >
             <Nav>
                 <Selection>
                     <option value="">All Types</option>

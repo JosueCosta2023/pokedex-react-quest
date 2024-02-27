@@ -17,13 +17,13 @@ const CardDetails = () => {
         }
         detailsPokemon()
     }, [])
-
+// 
     return (
         <SectionStyled theme={theme.theme}>
             <CardDetailsStyle theme={theme.theme}>
                 <CardImageSide>
                     <h5>Xp: {detail.base_experience}</h5>
-                    <img src={detail.sprites?.front_default} alt={detail.name} title={detail.name} />
+                    <img src={detail.sprites?.other['official-artwork'].front_default} alt={detail.name} title={detail.name} />
                     <p>{detail.name}</p>
                     <div>
                         {
@@ -41,7 +41,7 @@ const CardDetails = () => {
                         <h2>Movimentos</h2>
                         <MovesList>
                             {
-                                detail.moves && detail.moves.slice(0, 12).map((movimentos, index) => (
+                                detail.moves && detail.moves.slice(0, 6).map((movimentos, index) => (
                                     <li key={index}>{movimentos.move.name}</li>
                                 ))
                             }
