@@ -4,7 +4,7 @@ import  {ThemeContext}  from "../../contexts/theme-context"
 import axios from "axios"
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-import { getPokemon } from "../getsApi"
+import { axiosPokemon } from "../getsApi"
 
 
 const Card = () => {
@@ -12,7 +12,7 @@ const Card = () => {
     useEffect(() => {
         const PokemonData = async () => {
             try {
-                const results = await getPokemon()
+                const results = await axiosPokemon()
                 const pokemonPromises = results.map(async (result) => {
                     const pokemonResponse = await axios.get(result.url);
                     return {
@@ -41,7 +41,6 @@ const Card = () => {
                 pokemons.map((pokemon, index) => (
                     <Link to={`/profile/${pokemon.id}`} key={index} >
                         <CardStyled theme={theme.theme}   >
-                            <span></span>
                             <ImageStyle theme={theme.theme} src={pokemon.image} alt="Ilustração: imagem" title={pokemon.name}  />
                             <Number theme={theme.theme}>
                                 N° {pokemon.id} 

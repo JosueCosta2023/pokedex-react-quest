@@ -2,6 +2,7 @@ import styled from "styled-components"
 import React, { useEffect, useState } from "react"
 import {  getPokemonsTypesFilter } from "../getsApi"
 
+
 const responsePokemonsTypes = await getPokemonsTypesFilter()
 
 
@@ -21,8 +22,10 @@ const Navbar = () => {
         return () => {
             window.removeEventListener('scroll', handScroll)
         }
-    }, [])
 
+
+    }, [])
+    
     return(
         <NavContainer style={{top: isSticky ? '0px' : '-100px'}} >
             <Nav>
@@ -34,7 +37,7 @@ const Navbar = () => {
                         ))
                     }
                 </Selection>
-                <ButtomSearch>Buscar</ButtomSearch>
+                <ButtomSearch value={'50'} >Search More</ButtomSearch>
             </Nav>
         </NavContainer>
     )
@@ -68,8 +71,7 @@ const Nav = styled.div`
 `
 
 const ButtomSearch = styled.button`
-    width:150px;
-    height:40px;
+    padding:5px 20px;
     font-size:25px;
     border-radius:10px;
     border:none;

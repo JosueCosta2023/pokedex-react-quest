@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useParams } from "react-router-dom"
 import { ThemeContext } from "../../contexts/theme-context"
-import { getPokemonsDetails } from "../getsApi"
+import { getPokemonDetail } from "../getsApi"
 
 
 const CardDetails = () => {
@@ -12,8 +12,8 @@ const CardDetails = () => {
 
     useEffect(() => {
         async function detailsPokemon() {
-            const response = await getPokemonsDetails(id)
-            setDetails(response.data)
+            const response = await getPokemonDetail(id)
+            setDetails(response)
         }
         detailsPokemon()
     }, [])
@@ -54,9 +54,9 @@ const CardDetails = () => {
                                 detail.abilities && detail.abilities.map((ability, index) => (
                                     <li key={index}>
                                         <p>{ability.ability.name}</p>
+                                        <span>{ability.ability.description_ability}</span>
                                     </li>
                                 ))
-
                             }
                         </AbilityList>
                     </DetailsAbility>
@@ -69,7 +69,7 @@ const CardDetails = () => {
 const SectionStyled = styled.section`
     background-color:${(theme) => theme.theme.bodyContainerBackgroundColor};
     width:100%;
-    height:100%;
+    height:100vh;
     display:flex;
     justify-content:center;
     padding-bottom:50px;
@@ -78,6 +78,8 @@ const SectionStyled = styled.section`
 
 const CardDetailsStyle = styled.div`
     width:850px;
+    height:700px;
+    max-height:100%;
     background-color:${(theme) => theme.theme.bodyCardDetails};
     margin-top:50px;
     border-radius:10px;
@@ -98,7 +100,7 @@ const CardImageSide = styled.div`
     align-items:center;
     img{
         width:250px;
-        height:250px;
+        // height:250px;
         transform:scale(1.5);
         background-position:bottom;
         transform:rotateY(180deg);
@@ -118,6 +120,9 @@ const CardImageSide = styled.div`
         margin-left:5px;
         color:black;
         text-transform:capitalize;
+    }
+    h5{
+        font-size:28px;
     }
 `
 const CardDetailsSide = styled.div`
@@ -187,9 +192,11 @@ const AbilityList = styled.ul`
 
     li span{
         background-color:#f0f0f0;
+        color:black;
         display:block;
-        width:100%;
-        line-height:30px;
+        width:90%;
+        text-align:left;
+        padding:20px;
     }
 
 
