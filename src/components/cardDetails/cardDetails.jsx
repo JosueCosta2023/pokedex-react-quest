@@ -75,7 +75,6 @@ const SectionStyled = styled.section`
     padding-bottom:50px;
    
 `
-
 const CardDetailsStyle = styled.div`
     width:850px;
     height:700px;
