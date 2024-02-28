@@ -99,7 +99,7 @@ const CardImageSide = styled.div`
     align-items:center;
     img{
         width:250px;
-        // height:250px;
+        height:auto;
         transform:scale(1.5);
         background-position:bottom;
         transform:rotateY(180deg);
