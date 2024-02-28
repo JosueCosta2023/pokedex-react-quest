@@ -49,29 +49,13 @@ const Card = () => {
             window.removeEventListener('scroll', handScroll)
         }
 
-    }, [])
-
-    useEffect(() => {
-        const SetPokemonSearch = async (limit) => {
-            try {
-                const response = await axiosPokemon(limit)
-                setPokemon(response)
-            } catch (error) {
-                console.error('Erro ao carregar os pokemons:', error);
-                
-            }
-         
-        }
-
-        SetPokemonSearch()
-        
     }, [limit])
 
+    
     const theme = useContext(ThemeContext)
 
     const loadMorePokemons = () => {
-
-        setLimit(prevLimit => prevLimit + 10)
+        setLimit(prevLimit => prevLimit + 1)
     }
     
     return (
@@ -90,6 +74,7 @@ const Card = () => {
                 </Nav>
             </NavContainer>
             
+
             {
                 pokemons.map((pokemon, index) => (
                     <Link to={`/profile/${pokemon.id}`} key={index} >
@@ -105,6 +90,8 @@ const Card = () => {
                     </Link>
                 ))
             }
+
+            
         </CardContent>
     )
 }
@@ -114,13 +101,14 @@ const CardContent = styled.ul`
 width: 1900px;
 padding:0;
 max-width: 100%;
-height:100%;
+height:auto;
 margin: 0 auto;
 gap:20px;
 display:flex;
     flex-wrap:wrap;
     justify-content: center;
     margin-top:50px;
+   
     `
     const ImageStyle = styled.img`
     width: 100%;
