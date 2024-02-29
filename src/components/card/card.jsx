@@ -1,181 +1,186 @@
-
-import { useContext, useEffect, useState } from "react"
-import  {ThemeContext}  from "../../contexts/theme-context"
+import { useContext ,useEffect, useState } from "react"
+import { axiosPokemon, getPokemonsTypesFilter } from "../getsApi"
 import axios from "axios"
 import styled from "styled-components"
+import  {ThemeContext}  from "../../contexts/theme-context"
 import { Link } from "react-router-dom"
-import { axiosPokemon } from "../getsApi"
-import {  getPokemonsTypesFilter } from "../getsApi"
 
-const responsePokemonsTypes = await getPokemonsTypesFilter()
 
-const Card = () => {
-    const [pokemons, setPokemon] = useState([]);
-    const [isSticky, setIsSticky] = useState(false)
-    const [limit, setLimit] = useState(10)
-    
+function Card(){
+    const [pokemons, setPokemons] = useState([])
+    const [types, setTypes] = useState([])
+    const [selectedType, setSelectedType] = useState('')
+
+    // Buscar pokemons geral
     useEffect(() => {
-        const handScroll = () => {
-            if(window.scrollY > 0){
-                setIsSticky(true)
-            } else {
-                setIsSticky(false)
-            }
-        }
-        window.addEventListener('scroll', handScroll);
-
-        const PokemonData = async () => {
+        const fetchPokemons = async () => {
             try {
-                const results = await axiosPokemon(limit)
-                const pokemonPromises = results.map(async (result) => {
-                    const pokemonResponse = await axios.get(result.url);
-                    return {
-                        id:pokemonResponse.data.id,
-                        name: pokemonResponse.data.name,
-                        image: pokemonResponse.data.sprites.other['official-artwork'].front_default
-                    };
-                })
-                const pokemonData = await Promise.all(pokemonPromises)
-                setPokemon(pokemonData)
-                
+                const data = await axiosPokemon()
+                setPokemons(data)
             } catch (error) {
-                console.error("Falha ao buscar pokemons: ", error)
+                console.error("Erro ao buscar os pokemons:", error)
             }
         }
 
-        PokemonData()
+        fetchPokemons()
 
-        return () => {
-            window.removeEventListener('scroll', handScroll)
+    }, [])
+
+    // Buscar os tipos de pokemons
+    useEffect(() => {
+        const fetchPokemonsTypes = async () => {
+            try {
+                const response = await getPokemonsTypesFilter()
+                setTypes(response)
+            } catch (error) {
+                console.error("Erro ao buscar os tipo de pokemons:", error)
+            }
         }
+        fetchPokemonsTypes()
+    }, [])
 
-    }, [limit])
+    // Função seleção de pokemons input e bottom
+    // Mapeamento do input
 
+    const handleTypeChange = (e) => {
+        setSelectedType(e.target.value)
+    }
+
+    // Buscando os pokemons por tipo, atraves do input selected
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(`https://pokeapi.co/api/v2/type/${selectedType}`)
+            const data = response.data.pokemon.slice(0, 10)
+            setPokemons(data)
+            
+        } catch (error) {
+            console.error("Erro ao buscar os pokemons por tipo selecionado:", error)
+        }
+    }
+    return(
+        <SectionCards>
+            <NavBar
+                types={types}
+                selectedType={selectedType}
+                onTypeChange={handleTypeChange}
+                onSearch={handleSearch}
+            />
+            <CardContent>
+                {
+                    pokemons.map((pokemon, index) => (
+                        <Pokemons key={index} pokemon={pokemon}/>
+                    ))
+                }
+            </CardContent>
+        </SectionCards>
+    )
+}
+
+const SectionCards = styled.section`
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+`
+
+const CardContent = styled.div`
+    width:1900px;
+    height:auto;
+    max-height:auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content:center;
+    align-items:center;
+`
+
+
+function Pokemons({pokemon}){
+    const [pokemonInfo, setPokemonInfo] = useState(null)
+
+    useEffect(()=>{
+        const fetchPokemonsInfo = async () => {
+            try {
+                const response = await axios.get(pokemon.url)
+                setPokemonInfo(response.data)
+            } catch (error) {
+                console.error("Erro ao buscar informações do pokemon:", error)
+            }
+        };
+        
+        fetchPokemonsInfo()
+
+    }, [pokemon.url])
     
     const theme = useContext(ThemeContext)
 
-    const loadMorePokemons = () => {
-        setLimit(prevLimit => prevLimit + 1)
-    }
-    
-    return (
-        <CardContent>
-            <NavContainer style={{top: isSticky ? '0px' : '120px'}} >
-                <Nav>
-                    <Selection>
-                        <option value="">All Types</option>
-                        {
-                            responsePokemonsTypes.map((type, index) => (
-                                <option value={type.name} key={index}>{type.name}</option>
-                            ))
-                        }
-                    </Selection>
-                    <ButtomSearch onClick={loadMorePokemons}>Search More</ButtomSearch>
-                </Nav>
-            </NavContainer>
-            
-
+    return(
+        <div>
             {
-                pokemons.map((pokemon, index) => (
-                    <Link to={`/profile/${pokemon.id}`} key={index} >
-                        <CardStyled theme={theme.theme}   >
-                            <ImageStyle theme={theme.theme} src={pokemon.image} alt="Ilustração: imagem" title={pokemon.name}  />
-                            <Number theme={theme.theme}>
-                                N° {pokemon.id} 
-                            </Number>
-                            <Name theme={theme.theme}>
-                               {pokemon.name} 
-                            </Name>
+                pokemonInfo && (
+                    <Link to={`/profile/${pokemonInfo.id}`}>
+                        <CardStyled theme={theme.theme}>
+                            <ImageStyle theme={theme.theme} src={pokemonInfo.sprites.other['official-artwork'].front_default} alt="" />  
+                            <Number theme={theme.theme}>{pokemonInfo.id}</Number>
+                            <Name theme={theme.theme}>{pokemonInfo.name}</Name>
                         </CardStyled>
                     </Link>
-                ))
+                )
             }
+        </div>
+    )
+}
 
-            
-        </CardContent>
+const ImageStyle = styled.img`
+width: 100%;
+height: 350px;
+`
+const CardStyled = styled.li`
+background-color:${(theme) => theme.theme.bodyCardBackgroundColor};
+border: 2px solid #fff;
+text-align: center;
+padding: 20px 30px;
+width: 250px;
+cursor: pointer;
+display:flex;
+flex-direction: column;
+justify-content: center;
+border-radius: 15px;
+`
+const Name = styled.h3`
+width: 100%;
+height: 60px;
+line-height: 60px;
+text-transform:capitalize;
+font-size: 30px;
+border-radius: 5px;
+background-color: ${(theme) => theme.bodyCardButtomBackgroundColor};
+color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
+`
+
+const Number = styled.span`
+font-size:18px;
+color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
+margin-bottom:-20px;
+`
+
+
+function NavBar({types, selectedType, onTypeChange, onSearch}){
+    return(
+        <nav>
+            <select value={selectedType} onChange={onTypeChange}>
+                <option value="">All Types</option>
+
+                {types.map((type, index) => (
+                    <option  key={index} value={type.name}>{type.name}</option>
+                ))
+                }
+            </select>
+            <button onClick={onSearch}>Search</button>
+        </nav>
     )
 }
 
 
-const CardContent = styled.ul`
-width: 1900px;
-padding:0;
-max-width: 100%;
-height:auto;
-margin: 0 auto;
-gap:20px;
-display:flex;
-    flex-wrap:wrap;
-    justify-content: center;
-    margin-top:50px;
-   
-    `
-    const ImageStyle = styled.img`
-    width: 100%;
-    height: 350px;
-    `
-    const CardStyled = styled.li`
-    background-color:${(theme) => theme.theme.bodyCardBackgroundColor};
-    border: 2px solid #fff;
-    text-align: center;
-    padding: 20px 30px;
-    width: 250px;
-    cursor: pointer;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 15px;
-    `
-    const Name = styled.h3`
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
-    text-transform:capitalize;
-    font-size: 30px;
-    border-radius: 5px;
-    background-color: ${(theme) => theme.bodyCardButtomBackgroundColor};
-    color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
-`
-
-const Number = styled.span`
-    font-size:18px;
-    color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
-    margin-bottom:-20px;
-`
-
-const NavContainer = styled.nav`
-    width:100%;
-    height:100px;
-    position:fixed;
-    transition:top 0.3s;
-    background-color:#260E0A;
-`
-
-const Nav = styled.div`
-    width:1400px;
-    max-width:100%;
-    height:100%;
-    margin:0 auto;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-    `
-    
-    const Selection = styled.select`
-    width:300px;
-    height:40px;
-    font-size:25px;
-    padding-left:20px;
-    border-radius:5px;
-`
-
-const ButtomSearch = styled.button`
-    padding:5px 20px;
-    font-size:25px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
-`
 
 export default Card
