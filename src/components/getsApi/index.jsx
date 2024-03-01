@@ -4,7 +4,7 @@ const base_url = "https://pokeapi.co/api/v2/"
 
 export async function axiosPokemon() {
     try {
-        const response = await axios.get(`${base_url}pokemon/?limit=1&offset=0`)
+        const response = await axios.get(`${base_url}pokemon/?limit=10&offset=0`)
         return response.data.results   
     } catch (error) {
         console.error("Erro ao buscar dados na api: ", error)

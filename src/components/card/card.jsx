@@ -50,14 +50,12 @@ function Card(){
     const handleSearch = async () => {
         try {
             const response = await axios.get(`https://pokeapi.co/api/v2/type/${selectedType}`)
-            const data = response.data.pokemon.slice(0, 5)
+            const data = response.data.pokemon.slice(0, 10)
             setPokemons(data)
         } catch (error) {
             console.error("Erro ao buscar os pokemons por tipo selecionado:", error)
         }
     }
-
-    console.log(pokemons)
     return(
         <SectionCards>
             <NavBar
@@ -103,10 +101,9 @@ function Pokemons({pokemon}){
     useEffect(()=>{
         const fetchPokemonsInfo = async () => {
             try {
-                if(pokemon && pokemon.url){
-                    const response = await axios.get(pokemon.url) 
-                    setPokemonInfo(response.data)
-                }
+                const response = await axios.get(pokemon.pokemon.url) 
+                setPokemonInfo(response.data)
+
             } catch (error) {
                 console.error("Erro ao buscar informações do pokemon:", error)
             }
@@ -172,8 +169,7 @@ function NavBar({types, selectedType, onTypeChange, onSearch}){
     return(
         <NavBarStyle>
             <select value={selectedType} onChange={onTypeChange}>
-                <option value="">All Types</option>
-
+                <option value={'types'}>All Types</option>
                 {types.map((type, index) => (
                     <option  key={index} value={type.name}>{type.name}</option>
                 ))
