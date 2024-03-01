@@ -50,13 +50,14 @@ function Card(){
     const handleSearch = async () => {
         try {
             const response = await axios.get(`https://pokeapi.co/api/v2/type/${selectedType}`)
-            const data = response.data.pokemon.slice(0, 10)
+            const data = response.data.pokemon.slice(0, 5)
             setPokemons(data)
-            
         } catch (error) {
             console.error("Erro ao buscar os pokemons por tipo selecionado:", error)
         }
     }
+
+    console.log(pokemons)
     return(
         <SectionCards>
             <NavBar
@@ -79,12 +80,12 @@ function Card(){
 const SectionCards = styled.section`
     width:100%;
     display:flex;
-    justify-content:center;
-    align-items:center;
+    flex-direction:column;
 `
 
 const CardContent = styled.div`
     width:1900px;
+    max-width:100%;
     height:auto;
     max-height:auto;
     display:flex;
@@ -92,6 +93,7 @@ const CardContent = styled.div`
     gap:20px;
     justify-content:center;
     align-items:center;
+    margin:0 auto;
 `
 
 
@@ -101,8 +103,10 @@ function Pokemons({pokemon}){
     useEffect(()=>{
         const fetchPokemonsInfo = async () => {
             try {
-                const response = await axios.get(pokemon.url)
-                setPokemonInfo(response.data)
+                if(pokemon && pokemon.url){
+                    const response = await axios.get(pokemon.url) 
+                    setPokemonInfo(response.data)
+                }
             } catch (error) {
                 console.error("Erro ao buscar informações do pokemon:", error)
             }
@@ -157,7 +161,6 @@ border-radius: 5px;
 background-color: ${(theme) => theme.bodyCardButtomBackgroundColor};
 color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
 `
-
 const Number = styled.span`
 font-size:18px;
 color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
@@ -167,7 +170,7 @@ margin-bottom:-20px;
 
 function NavBar({types, selectedType, onTypeChange, onSearch}){
     return(
-        <nav>
+        <NavBarStyle>
             <select value={selectedType} onChange={onTypeChange}>
                 <option value="">All Types</option>
 
@@ -177,9 +180,34 @@ function NavBar({types, selectedType, onTypeChange, onSearch}){
                 }
             </select>
             <button onClick={onSearch}>Search</button>
-        </nav>
+        </NavBarStyle>
     )
 }
+
+
+const NavBarStyle = styled.nav`
+    width:100%;
+    height:100px;
+    background-color:#260E0A;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    select{
+        font-size:25px;
+        width:250px;
+        border-radius:5px;
+        padding:5px;
+    }
+    button{
+        font-size:25px;
+        width:150px;
+        border-radius:5px;
+        padding:5px;
+        cursor:pointernpm;
+    }
+`
 
 
 

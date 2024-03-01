@@ -16,7 +16,6 @@ const Cards = () => {
 
 const SectionStyled = styled.section`
     width: 100%;
-    padding:50px 0px;
     display:flex;
     justify-content:center;
     align-items:center;
