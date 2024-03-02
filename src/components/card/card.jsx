@@ -1,14 +1,15 @@
-import { useContext ,useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { axiosPokemon, getPokemonsTypesFilter } from "../getsApi"
 import axios from "axios"
 import styled from "styled-components"
-import  {ThemeContext}  from "../../contexts/theme-context"
+import { ThemeContext } from "../../contexts/theme-context"
 import { Link } from "react-router-dom"
 
 
-function Card(){
+function Card() {
     const [pokemons, setPokemons] = useState([])
     const [types, setTypes] = useState([])
+    const [pokemonSearch, setPokemonSearch] = useState([])
     const [selectedType, setSelectedType] = useState('')
 
     // Buscar pokemons geral
@@ -16,7 +17,6 @@ function Card(){
         const fetchPokemons = async () => {
             try {
                 const data = await axiosPokemon()
-                console.log(`Dados do axiospokemon inciais: `, data)
                 setPokemons(data)
             } catch (error) {
                 console.error("Erro ao buscar os pokemons:", error)
@@ -49,17 +49,22 @@ function Card(){
 
     // Buscando os pokemons por tipo, atraves do input selected
     const handleSearch = async () => {
+        if (selectedType === "all-types") {
+            setPokemonSearch([])
+        }
         try {
             const response = await axios.get(`https://pokeapi.co/api/v2/type/${selectedType}`)
+
             const data = response.data.pokemon.slice(0, 10)
-            console.log(data)
-            setPokemons(data)
+            const result = data.map((item) =>
+                item.pokemon)
+            setPokemonSearch(result)
 
         } catch (error) {
             console.error("Erro ao buscar os pokemons por tipo selecionado:", error)
         }
     }
-    return(
+    return (
         <SectionCards>
             <NavBar
                 types={types}
@@ -68,9 +73,12 @@ function Card(){
                 onSearch={handleSearch}
             />
             <CardContent>
-                {
+                {pokemonSearch.length > 0 ?
+                    pokemonSearch.map((pokemon, index) => (
+                        <Pokemons key={index} pokemon={pokemon} />
+                    )) :
                     pokemons.map((pokemon, index) => (
-                        <Pokemons key={index} pokemon={pokemon}/>
+                        <Pokemons key={index} pokemon={pokemon} />
                     ))
                 }
             </CardContent>
@@ -97,38 +105,32 @@ const CardContent = styled.div`
 `
 
 // COMPONENTE POKEMONS EXTRAIR
-function Pokemons({pokemon}){
+function Pokemons({ pokemon }) {
     const [pokemonInfo, setPokemonInfo] = useState(null)
 
-    useEffect(()=>{
+    useEffect(() => {
         const fetchPokemonsInfo = async () => {
             try {
-                const responseTwo = await axios.get(pokemon.url) 
-                // console.log(`Dados iniciais:`, responseTwo)
-                setPokemonInfo(responseTwo.data)
-
-                // const response = await axios.get(pokemon.pokemon.url) 
-                // console.log(`Dados vindos atraves do filtro:`, response)
-                // setPokemonInfo(response.data)
-
+                const response = await axios.get(pokemon.url)
+                setPokemonInfo(response.data)
             } catch (error) {
                 console.error("Erro ao buscar informações do pokemon:", error)
             }
         };
-        
+
         fetchPokemonsInfo()
 
     }, [pokemon.url])
-    
+
     const theme = useContext(ThemeContext)
 
-    return(
+    return (
         <div>
             {
                 pokemonInfo && (
                     <Link to={`/profile/${pokemonInfo.id}`}>
                         <CardStyled theme={theme.theme}>
-                            <ImageStyle theme={theme.theme} src={pokemonInfo.sprites.other['official-artwork'].front_default} alt="" />  
+                            <ImageStyle theme={theme.theme} src={pokemonInfo.sprites.other['official-artwork'].front_default} alt="" />
                             <Number theme={theme.theme}>{pokemonInfo.id}</Number>
                             <Name theme={theme.theme}>{pokemonInfo.name}</Name>
                         </CardStyled>
@@ -172,13 +174,13 @@ margin-bottom:-20px;
 `
 
 // COMPONENTE NAVBAR, EXTRAIR
-function NavBar({types, selectedType, onTypeChange, onSearch}){
-    return(
+function NavBar({ types, selectedType, onTypeChange, onSearch }) {
+    return (
         <NavBarStyle>
             <select value={selectedType} onChange={onTypeChange}>
-                <option value={'types'}>All Types</option>
+                <option value={'all-types'}>All Types</option>
                 {types.map((type, index) => (
-                    <option  key={index} value={type.name}>{type.name}</option>
+                    <option key={index} value={type.name}>{type.name}</option>
                 ))
                 }
             </select>
