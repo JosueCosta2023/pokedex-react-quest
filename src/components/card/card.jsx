@@ -80,7 +80,6 @@ const SectionCards = styled.section`
     display:flex;
     flex-direction:column;
 `
-
 const CardContent = styled.div`
     width:1900px;
     max-width:100%;
@@ -94,7 +93,7 @@ const CardContent = styled.div`
     margin:0 auto;
 `
 
-
+// COMPONENTE POKEMONS EXTRAIR
 function Pokemons({pokemon}){
     const [pokemonInfo, setPokemonInfo] = useState(null)
 
@@ -164,7 +163,7 @@ color: ${(theme) => theme.theme.bodyCardButtonFontcolor};
 margin-bottom:-20px;
 `
 
-
+// COMPONENTE NAVBAR, EXTRAIR
 function NavBar({types, selectedType, onTypeChange, onSearch}){
     return(
         <NavBarStyle>
@@ -179,7 +178,6 @@ function NavBar({types, selectedType, onTypeChange, onSearch}){
         </NavBarStyle>
     )
 }
-
 
 const NavBarStyle = styled.nav`
     width:100%;
