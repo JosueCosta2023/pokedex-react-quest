@@ -16,6 +16,7 @@ function Card(){
         const fetchPokemons = async () => {
             try {
                 const data = await axiosPokemon()
+                console.log(`Dados do axiospokemon inciais: `, data)
                 setPokemons(data)
             } catch (error) {
                 console.error("Erro ao buscar os pokemons:", error)
@@ -51,7 +52,9 @@ function Card(){
         try {
             const response = await axios.get(`https://pokeapi.co/api/v2/type/${selectedType}`)
             const data = response.data.pokemon.slice(0, 10)
+            console.log(data)
             setPokemons(data)
+
         } catch (error) {
             console.error("Erro ao buscar os pokemons por tipo selecionado:", error)
         }
@@ -101,9 +104,9 @@ function Pokemons({pokemon}){
         const fetchPokemonsInfo = async () => {
             try {
                 const responseTwo = await axios.get(pokemon.url) 
-                console.log(`Dados iniciais:`, responseTwo)
+                // console.log(`Dados iniciais:`, responseTwo)
                 setPokemonInfo(responseTwo.data)
-                
+
                 // const response = await axios.get(pokemon.pokemon.url) 
                 // console.log(`Dados vindos atraves do filtro:`, response)
                 // setPokemonInfo(response.data)
