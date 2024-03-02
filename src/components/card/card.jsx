@@ -100,8 +100,13 @@ function Pokemons({pokemon}){
     useEffect(()=>{
         const fetchPokemonsInfo = async () => {
             try {
-                const response = await axios.get(pokemon.pokemon.url) 
-                setPokemonInfo(response.data)
+                const responseTwo = await axios.get(pokemon.url) 
+                console.log(`Dados iniciais:`, responseTwo)
+                setPokemonInfo(responseTwo.data)
+                
+                // const response = await axios.get(pokemon.pokemon.url) 
+                // console.log(`Dados vindos atraves do filtro:`, response)
+                // setPokemonInfo(response.data)
 
             } catch (error) {
                 console.error("Erro ao buscar informações do pokemon:", error)
